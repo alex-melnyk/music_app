@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
           alignment: Alignment.bottomCenter,
           child: Material(
             color: Colors.transparent,
-            child: BottomBar(
+            child: GlassBottomPanel(
               showCurrentPlay: true,
             ),
           ),
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildGenres() {
     return Expanded(
-      child: CustomTabBar(
+      child: PageBar(
         tabs: [
           'Commercial',
           'Free license',

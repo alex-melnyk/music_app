@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
-class CurrentPlayBar extends StatefulWidget {
-  const CurrentPlayBar({
+class CurrentPlayPanel extends StatefulWidget {
+  const CurrentPlayPanel({
     Key key,
-    this.animationController,
+    @required this.animationController,
   }) : super(key: key);
 
   final AnimationController animationController;
 
   @override
-  _CurrentPlayBarState createState() => _CurrentPlayBarState();
+  _CurrentPlayPanelState createState() => _CurrentPlayPanelState();
 }
 
-class _CurrentPlayBarState extends State<CurrentPlayBar>
+class _CurrentPlayPanelState extends State<CurrentPlayPanel>
     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
@@ -56,61 +56,78 @@ class _CurrentPlayBarState extends State<CurrentPlayBar>
                       AnimatedBuilder(
                         animation: widget.animationController,
                         builder: (context, child) {
+                          final scaleTween = Tween<double>(
+                            begin: 0.75,
+                            end: 1.0,
+                          ).evaluate(widget.animationController);
+
                           final trans1Tween = Tween(
-                            begin: Offset(0, 250),
+                            begin: Offset(0, 100),
                             end: Offset.zero,
                           ).evaluate(widget.animationController);
 
                           final trans2Tween = Tween(
-                            begin: Offset(0, 500),
+                            begin: Offset(0, 150),
                             end: Offset.zero,
                           ).evaluate(widget.animationController);
 
                           final trans3Tween = Tween(
-                            begin: Offset(0, 750),
+                            begin: Offset(0, 200),
                             end: Offset.zero,
                           ).evaluate(widget.animationController);
 
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Transform.translate(
-                                offset: trans1Tween,
-                                child: _buildFullTitle(),
+                              Transform.scale(
+                                scale: scaleTween,
+                                child: Transform.translate(
+                                  offset: trans1Tween,
+                                  child: _buildFullTitle(),
+                                ),
                               ),
-                              Transform.translate(
-                                offset: trans2Tween,
-                                child: _buildTimeline(),
+                              Transform.scale(
+                                scale: scaleTween,
+                                child: Transform.translate(
+                                  offset: trans2Tween,
+                                  child: _buildTimeline(),
+                                ),
                               ),
-                              Transform.translate(
-                                offset: trans3Tween,
-                                child: _buildControls(),
+                              Transform.scale(
+                                scale: scaleTween,
+                                child: Transform.translate(
+                                  offset: trans3Tween,
+                                  child: _buildControls(),
+                                ),
                               ),
-                              Transform.translate(
-                                offset: trans3Tween,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 16,
-                                  ),
-                                  child: OutlineButton(
-                                    onPressed: () {},
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 24,
-                                        vertical: 12.0,
-                                      ),
-                                      child: Text(
-                                        '+ Add to cart',
-                                      ),
+                              Transform.scale(
+                                scale: scaleTween,
+                                child: Transform.translate(
+                                  offset: trans3Tween,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 16,
                                     ),
-                                    color: Colors.white,
-                                    textColor: Colors.white,
-                                    borderSide: BorderSide(
+                                    child: OutlineButton(
+                                      onPressed: () {},
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 24,
+                                          vertical: 12.0,
+                                        ),
+                                        child: Text(
+                                          '+ Add to cart',
+                                        ),
+                                      ),
                                       color: Colors.white,
-                                      width: 1.0,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
+                                      textColor: Colors.white,
+                                      borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 1.0,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -26,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     _buildHeadline(),
                     Search(),
                     Expanded(
-                      child: CustomTabBar(
+                      child: PageBar(
                         tabs: [
                           'Tracks',
                           'Albums',
@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: BottomBar(),
+              child: GlassBottomPanel(),
             ),
           ],
         ),

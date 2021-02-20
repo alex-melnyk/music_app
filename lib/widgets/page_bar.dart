@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomTabBar extends StatefulWidget {
-  const CustomTabBar({
+class PageBar extends StatefulWidget {
+  const PageBar({
     Key key,
     @required this.tabs,
     @required this.itemBuilder,
@@ -13,10 +13,10 @@ class CustomTabBar extends StatefulWidget {
   final TextStyle textStyle;
 
   @override
-  _CustomTabBarState createState() => _CustomTabBarState();
+  _PageBarState createState() => _PageBarState();
 }
 
-class _CustomTabBarState extends State<CustomTabBar>
+class _PageBarState extends State<PageBar>
     with SingleTickerProviderStateMixin {
   final _pageController = PageController();
   AnimationController _controller;
