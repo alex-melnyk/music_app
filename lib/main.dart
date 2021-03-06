@@ -3,7 +3,7 @@ import 'package:music_app/screens/screens.dart';
 
 void main() {
   runApp(MaterialApp(
-    title: 'Music App Sample',
+    title: 'Music App',
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       primarySwatch: Colors.blue,

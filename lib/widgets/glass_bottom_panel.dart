@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:music_app/widgets/widgets.dart';
 
 const animationDuration = Duration(milliseconds: 500);
@@ -21,7 +22,6 @@ class _GlassBottomPanelState extends State<GlassBottomPanel>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
 
-  CurrentPlayPanel _currentPlayBar;
   double _capturedValue = 0.0;
   Offset _capturedOffset;
 
@@ -33,10 +33,6 @@ class _GlassBottomPanelState extends State<GlassBottomPanel>
       vsync: this,
       value: 0.0,
       duration: animationDuration,
-    );
-
-    _currentPlayBar = CurrentPlayPanel(
-      animationController: _animationController,
     );
   }
 
@@ -75,15 +71,28 @@ class _GlassBottomPanelState extends State<GlassBottomPanel>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                HandleBar(animationController: _animationController),
+                HandleBar(
+                  animationController: _animationController,
+                ),
                 if (widget.showCurrentPlay)
                   InkWell(
                     highlightColor: Colors.transparent,
                     splashColor: Colors.transparent,
                     onTap: _handleOpen,
-                    child: _currentPlayBar,
+                    child: CurrentPlayPanel(
+                      animationController: _animationController,
+                    ),
                   ),
-                BottomTabBar(animationController: _animationController),
+                BottomTabBar(
+                  animationController: _animationController,
+                  controller: ValueNotifier<int>(0),
+                  items: [
+                    BottomTabBarItem('Home', Ionicons.ios_home),
+                    BottomTabBarItem('Navigator', Ionicons.ios_compass),
+                    BottomTabBarItem('Chat', Ionicons.ios_chatbubbles),
+                    BottomTabBarItem('Profile', Ionicons.ios_person),
+                  ],
+                ),
               ],
             ),
           ),

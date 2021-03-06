@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+
+class BottomTabBarItem {
+  const BottomTabBarItem(this.title, this.icon);
+
+  final String title;
+  final IconData icon;
+}
 
 class BottomTabBar extends StatefulWidget {
   const BottomTabBar({
     Key key,
     @required this.animationController,
+    @required this.items,
+    @required this.controller,
   }) : super(key: key);
 
   final AnimationController animationController;
+  final List<BottomTabBarItem> items;
+  final ValueNotifier<int> controller;
 
   @override
   _BottomTabBarState createState() => _BottomTabBarState();
@@ -23,7 +33,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
 
     final scaleTween = Tween<double>(
       begin: 1.0,
-      end: 0.85,
+      end: 0.75,
     ).animate(widget.animationController);
 
     return Container(
@@ -46,61 +56,52 @@ class _BottomTabBarState extends State<BottomTabBar> {
             vertical: 8,
           ),
           decoration: BoxDecoration(
-            color: Colors.black87,
+            color: Colors.black,
             borderRadius: BorderRadius.circular(15),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildTabBarIcon(
-                Ionicons.ios_home,
-                'Home',
-                Colors.grey,
-              ),
-              _buildTabBarIcon(
-                Ionicons.ios_compass,
-                'Navigator',
-                Colors.orange,
-              ),
-              _buildTabBarIcon(
-                Ionicons.ios_chatbubbles,
-                'Chat',
-                Colors.grey,
-              ),
-              _buildTabBarIcon(
-                Ionicons.ios_person,
-                'Profile',
-                Colors.grey,
-              ),
-            ],
+          child: ValueListenableBuilder(
+            valueListenable: widget.controller,
+            builder: (_, value, __) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: widget.items
+                    .asMap()
+                    .map((key, value) {
+                      final isSelected = widget.controller.value == key;
+
+                      return MapEntry(
+                        key,
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: 4,
+                              ),
+                              child: Icon(
+                                value.icon,
+                                size: 24,
+                                color: isSelected ? Colors.orange : Colors.grey,
+                              ),
+                            ),
+                            Text(
+                              value.title,
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: isSelected ? Colors.orange : Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    })
+                    .values
+                    .toList(growable: false),
+              );
+            },
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildTabBarIcon(IconData icon, String label, Color activeColor) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            bottom: 4,
-          ),
-          child: Icon(
-            icon,
-            size: 24,
-            color: activeColor,
-          ),
-        ),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 10,
-            color: activeColor,
-          ),
-        ),
-      ],
     );
   }
 }
