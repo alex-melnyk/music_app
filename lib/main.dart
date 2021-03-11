@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/screens/screens.dart';
 
+import 'screens/modal_example.dart';
+
 void main() {
   runApp(MaterialApp(
     title: 'Music App',
